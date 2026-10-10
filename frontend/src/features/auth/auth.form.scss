@@ -1,0 +1,585 @@
+// main {
+//     min-height: 100vh;
+//     width: 100%;
+
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+
+//     .input-group {
+//         display: flex;
+//         flex-direction: column;
+//         gap: .75rem;
+//     }
+
+
+//     input {
+//         border: none;
+//         outline: none;
+//         padding: .5rem 1rem;
+//         border-radius: 5px;
+//     }
+// }
+
+
+// ===========================
+// VARIABLES & COLORS
+// ===========================
+$primary-color: #6366f1;
+$primary-hover: #4f46e5;
+$primary-dark: #4338ca;
+$text-color: #1f2937;
+$text-light: #6b7280;
+$border-color: #e5e7eb;
+$bg-light: #f9fafb;
+$bg-white: #ffffff;
+$success-color: #10b981;
+$error-color: #ef4444;
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+
+// ===========================
+// ANIMATIONS
+// ===========================
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes underlineExpand {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+// ===========================
+// MAIN CONTAINER
+// ===========================
+main {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  animation: fadeIn 0.6s ease-out;
+}
+
+// ===========================
+// FORM CONTAINER
+// ===========================
+.form-container {
+  background: $bg-white;
+  border-radius: 16px;
+  padding: 48px 40px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: $shadow-lg;
+  animation: slideInUp 0.6s ease-out;
+  position: relative;
+  overflow: hidden;
+
+  // Animated gradient border effect at top
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      $primary-color,
+      transparent
+    );
+    animation: shimmer 2s infinite;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: $text-color;
+    margin: 0 0 10px 0;
+    animation: slideInUp 0.8s ease-out 0.1s both;
+    letter-spacing: -0.5px;
+  }
+
+  // Subtitle/description under title
+  &::after {
+    content: 'Welcome back! Please login to your account';
+    display: block;
+    font-size: 14px;
+    color: $text-light;
+    margin-bottom: 32px;
+    animation: slideInUp 0.8s ease-out 0.15s both;
+  }
+}
+
+// ===========================
+// FORM
+// ===========================
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: floatIn 0.8s ease-out 0.2s both;
+}
+
+// ===========================
+// INPUT GROUP
+// ===========================
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: slideInUp 0.6s ease-out;
+
+  &:nth-child(1) {
+    animation-delay: 0.25s;
+  }
+
+  &:nth-child(2) {
+    animation-delay: 0.35s;
+  }
+
+  label {
+    font-size: 14px;
+    font-weight: 600;
+    color: $text-color;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+  }
+
+  input {
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 2px solid $border-color;
+    border-radius: 10px;
+    background-color: $bg-light;
+    color: $text-color;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: inherit;
+    outline: none;
+    position: relative;
+
+    // Smooth placeholder styling
+    &::placeholder {
+      color: #d1d5db;
+      transition: color 0.3s ease;
+    }
+
+    // Focus state with animations
+    &:focus {
+      border-color: $primary-color;
+      background-color: $bg-white;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      transform: translateY(-2px);
+
+      & ~ label {
+        color: $primary-color;
+      }
+    }
+
+    // Hover state
+    &:hover {
+      border-color: $primary-color;
+      background-color: $bg-white;
+    }
+
+    // Filled state
+    &:not(:placeholder-shown) {
+      background-color: $bg-white;
+
+      & ~ label {
+        color: $primary-color;
+        transform: translateY(-5px) scale(0.95);
+      }
+    }
+
+    // Error state (optional utility class)
+    &.error {
+      border-color: $error-color;
+      animation: shake 0.4s ease-in-out;
+
+      &:focus {
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+      }
+    }
+
+    // Success state (optional utility class)
+    &.success {
+      border-color: $success-color;
+
+      &:focus {
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+      }
+    }
+  }
+}
+
+// ===========================
+// BUTTONS
+// ===========================
+.button {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  animation: slideInUp 0.8s ease-out 0.45s both;
+
+  // Ripple effect on click
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease-out, height 0.6s ease-out;
+  }
+
+  &:active::before {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+// Primary button styling
+.primary-button {
+  background: linear-gradient(135deg, $primary-color 0%, $primary-dark 100%);
+  color: white;
+  box-shadow: $shadow-md;
+  position: relative;
+  width: 100%;
+  min-height: 48px;
+
+  &:hover {
+    background: linear-gradient(135deg, $primary-hover 0%, $primary-dark 100%);
+    box-shadow: $shadow-lg;
+    transform: translateY(-2px);
+
+    &::after {
+      animation: pulse 1s infinite;
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: $shadow-md;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+
+    &:hover {
+      box-shadow: $shadow-md;
+    }
+  }
+
+  // Animated gradient background
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    animation: shimmer 2s infinite;
+    border-radius: 10px;
+  }
+}
+
+// Additional button variants (optional)
+.secondary-button {
+  background-color: $bg-light;
+  color: $primary-color;
+  border: 2px solid $primary-color;
+
+  &:hover {
+    background-color: $primary-color;
+    color: white;
+    box-shadow: $shadow-lg;
+  }
+}
+
+.success-button {
+  background: linear-gradient(135deg, $success-color 0%, #059669 100%);
+  color: white;
+
+  &:hover {
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+  }
+}
+
+// ===========================
+// REGISTRATION LINK SECTION
+// ===========================
+.form-container > p {
+  margin-top: 24px;
+  margin-bottom: 0;
+  text-align: center;
+  font-size: 14px;
+  color: $text-light;
+  animation: slideInUp 0.8s ease-out 0.55s both;
+  line-height: 1.5;
+
+  a {
+    color: $primary-color;
+    text-decoration: none;
+    font-weight: 600;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-block;
+
+    // Underline animation on hover
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, $primary-color, $primary-hover);
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    &:hover {
+      color: $primary-hover;
+      transform: translateY(-1px);
+
+      &::after {
+        width: 100%;
+      }
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+// ===========================
+// RESPONSIVE DESIGN
+// ===========================
+@media (max-width: 768px) {
+  .form-container {
+    padding: 32px 24px;
+    border-radius: 12px;
+
+    h1 {
+      font-size: 24px;
+    }
+
+    > p {
+      font-size: 13px;
+      margin-top: 20px;
+    }
+  }
+
+  .input-group {
+    input {
+      padding: 11px 14px;
+      font-size: 16px; // Prevents zoom on iOS
+    }
+  }
+
+  .button {
+    min-height: 44px; // iOS touch target
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  main {
+    padding: 12px;
+  }
+
+  .form-container {
+    padding: 28px 16px;
+
+    h1 {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    &::after {
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+
+    > p {
+      font-size: 12px;
+      margin-top: 18px;
+    }
+  }
+
+  form {
+    gap: 16px;
+  }
+
+  .input-group {
+    gap: 6px;
+
+    label {
+      font-size: 13px;
+    }
+
+    input {
+      padding: 10px 12px;
+      font-size: 16px;
+    }
+  }
+
+  .button {
+    min-height: 44px;
+    font-size: 14px;
+  }
+}
+
+// ===========================
+// ACCESSIBILITY
+// ===========================
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// Dark mode support (optional)
+@media (prefers-color-scheme: dark) {
+  main {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  }
+
+  .form-container {
+    background: #1f2937;
+    color: #f3f4f6;
+
+    h1 {
+      color: #f3f4f6;
+    }
+
+    &::after {
+      color: #9ca3af;
+    }
+
+    > p {
+      color: #9ca3af;
+
+      a {
+        color: #818cf8;
+
+        &:hover {
+          color: #a5b4fc;
+        }
+      }
+    }
+  }
+
+  .input-group {
+    label {
+      color: #f3f4f6;
+    }
+
+    input {
+      background-color: #374151;
+      border-color: #4b5563;
+      color: #f3f4f6;
+
+      &::placeholder {
+        color: #6b7280;
+      }
+
+      &:focus {
+        background-color: #1f2937;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+      }
+
+      &:hover {
+        background-color: #374151;
+      }
+    }
+  }
+}
