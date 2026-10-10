@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 
 const getCookieOptions = () => {
-    const isProd = process.env.NODE_ENV === "production"
+    const isProd = process.env.NODE_ENV === "production" || !!process.env.RENDER || !!process.env.FRONTEND_URL
     return {
         httpOnly: true,
         secure: isProd,

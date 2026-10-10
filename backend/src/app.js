@@ -6,10 +6,11 @@ const cors = require("cors")
 const app = express()
 app.set("trust proxy", 1)
 
-const allowedOrigin = process.env.FRONTEND_URL || "http://localhost:5173"
-
 app.use(cors({
-    origin: allowedOrigin,
+    origin: function (origin, callback) {
+        // Echo incoming origin to allow cross-site requests with credentials
+        callback(null, true);
+    },
     credentials: true
 }))
 app.use(express.json())
